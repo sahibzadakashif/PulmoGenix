@@ -97,18 +97,22 @@ def build_model(input_data, smiles_list):
  return df_sorted
 # Function to handle SMILES input and prediction
 def handle_prediction(smiles_input):
- with st.spinner("Calculating descriptors..."):
-    desc_calc(smiles_input)
-# Read in calculated descriptors
- desc = pd.read_csv('descriptors_output.csv')
-# Read descriptor list used in previously built model
- Xlist = list(pd.read_csv('descriptor_list.csv').columns)
-desc_subset = desc[Xlist]
- # Split SMILES strings
- smiles_list = smiles_input.split('\n')
- # Get prediction results
- prediction_df = build_model(desc_subset, smiles_list)
- return prediction_df
+    with st.spinner("Calculating descriptors..."):
+        desc_calc(smiles_input)
+    
+    # Read in calculated descriptors
+    desc = pd.read_csv('descriptors_output.csv')
+    
+    # Read descriptor list used in previously built model
+    Xlist = list(pd.read_csv('descriptor_list.csv').columns)
+    desc_subset = desc[Xlist]
+    
+    # Split SMILES strings
+    smiles_list = smiles_input.split('\n')
+    
+    # Get prediction results
+    prediction_df = build_model(desc_subset, smiles_list)
+    return prediction_df
  # Main function to handle the app's logic
 def main():
  # Initialize session state
