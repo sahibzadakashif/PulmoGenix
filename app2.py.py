@@ -1,4 +1,4 @@
-Importing necessary libraries:
+#Importing necessary libraries
 import streamlit as st
 import requests
 import pandas as pd
