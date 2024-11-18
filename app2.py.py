@@ -114,76 +114,91 @@ def handle_prediction(smiles_input):
     prediction_df = build_model(desc_subset, smiles_list)
     return prediction_df
  # Main function to handle the app's logic
+# Main function to handle the app's logic
 def main():
- # Initialize session state
- if 'page' not in st.session_state:
-    st.session_state.page = 'input'
- # Navigation function
- def navigate_to(page):
- st.session_state.page = page
- # Input page
- if st.session_state.page == 'input':
- st.subheader('pIC50 Prediction')
- # Radio button for input method selection
- input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Upload CSV/TXT File"))
- if input_method == "Copy and Paste SMILES":
- st.header('1. Enter SMILES String:')
- smiles_input = st.text_area("Enter SMILES String here:", "")
- if st.button('Predict'):
- if smiles_input:
- # Store SMILES input in session state
- st.session_state.smiles_input = smiles_input
-# Perform prediction and store results
- st.session_state.prediction_df = handle_prediction(smiles_input)
- # Navigate to the output page
- navigate_to('output')
- else:
- st.warning('Please enter a SMILES string.')
- else:
- st.header('1. Upload CSV or TXT file containing SMILES:')
- uploaded_file = st.file_uploader("Upload file", type=["csv", "txt"])
- if st.button('Predict'):
- if uploaded_file is not None:
- # Read the uploaded file
- if uploaded_file.type == "text/csv":
- smiles_df = pd.read_csv(uploaded_file)
- else:
- smiles_df = pd.read_csv(uploaded_file, delimiter="\t", header=None, 
-names=["SMILES"])
- smiles_list = smiles_df['SMILES'].tolist()
- smiles_input = '\n'.join(smiles_list)
- # Store SMILES input in session state
- st.session_state.smiles_input = smiles_input
- # Perform prediction and store results
- st.session_state.prediction_df = handle_prediction(smiles_input)
- # Navigate to the output page
- navigate_to('output')
- else:
- st.warning('Please upload a CSV or TXT file.')
- # Output page
- elif st.session_state.page == 'output':
-st.header('**Prediction output**')
- # Center the prediction table
- st.markdown(
- """
- <style>
- .center-table {
- margin-left: auto;
- margin-right: auto;
- }
- </style>
- """, 
- unsafe_allow_html=True
- )
- st.table(st.session_state.prediction_df.style.set_table_styles(
- [{'selector': '', 'props': [('margin-left', 'auto'), ('margin-right', 'auto')]}]
- ))
- st.markdown(filedownload(st.session_state.prediction_df), unsafe_allow_html=True)
- 
- if st.button('Go Back'):
- navigate_to('input')
-if __name__ == "__main__":
- main()
+    # Initialize session state
+    if 'page' not in st.session_state:
+        st.session_state.page = 'input'
+
+    # Navigation function
+    def navigate_to(page):
+        st.session_state.page = page
+
+    # Input page
+    if st.session_state.page == 'input':
+        st.subheader('pIC50 Prediction')
+        # Further code for the input page here...
+# Radio button for input method selection
+input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Upload CSV/TXT File"))
+
+if input_method == "Copy and Paste SMILES":
+    st.header('1. Enter SMILES String:')
+    smiles_input = st.text_area("Enter SMILES String here:", "")
+    
+    if st.button('Predict'):
+        if smiles_input:
+            # Store SMILES input in session state
+            st.session_state.smiles_input = smiles_input
+            
+            # Perform prediction and store results
+            st.session_state.prediction_df = handle_prediction(smiles_input)
+            
+            # Navigate to the output page
+            navigate_to('output')
+        else:
+            st.warning('Please enter a SMILES string.')
+
+else:
+    st.header('1. Upload CSV or TXT file containing SMILES:')
+    uploaded_file = st.file_uploader("Upload file", type=["csv", "txt"])
+    
+    if st.button('Predict'):
+        if uploaded_file is not None:
+            # Read the uploaded file
+            if uploaded_file.type == "text/csv":
+                smiles_df = pd.read_csv(uploaded_file)
+            else:
+                smiles_df = pd.read_csv(uploaded_file, delimiter="\t", header=None, names=["SMILES"])
+            
+            smiles_list = smiles_df['SMILES'].tolist()
+            smiles_input = '\n'.join(smiles_list)
+            
+            # Store SMILES input in session state
+            st.session_state.smiles_input = smiles_input
+            
+            # Perform prediction and store results
+            st.session_state.prediction_df = handle_prediction(smiles_input)
+            
+            # Navigate to the output page
+            navigate_to('output')
+        else:
+            st.warning('Please upload a CSV or TXT file.')
+
+# Output page
+if st.session_state.page == 'output':
+    st.header('**Prediction output**')
+    
+    # Center the prediction table
+    st.markdown(
+        """
+        <style>
+        .center-table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    st.table(st.session_state.prediction_df.style.set_table_styles(
+        [{'selector': '', 'props': [('margin-left', 'auto'), ('margin-right', 'auto')]}]
+    ))
+    
+    st.markdown(filedownload(st.session_state.prediction_df), unsafe_allow_html=True)
+    
+    if st.button('Go Back'):
+        navigate_to('input')
  
 # Add a section with the developers' information at the bottom of the page
 st.markdown("---")
