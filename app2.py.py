@@ -98,7 +98,7 @@ def build_model(input_data, smiles_list):
 # Function to handle SMILES input and prediction
 def handle_prediction(smiles_input):
  with st.spinner("Calculating descriptors..."):
- desc_calc(smiles_input)
+    desc_calc(smiles_input)
 # Read in calculated descriptors
  desc = pd.read_csv('descriptors_output.csv')
 # Read descriptor list used in previously built model
