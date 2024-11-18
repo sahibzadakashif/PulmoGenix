@@ -51,16 +51,27 @@ st.markdown(f"""
 center = st.columns([1])
 st.image("uol.jpg", use_column_width=True)
 # Molecular descriptor calculator
+# Molecular descriptor calculator
 def desc_calc(smiles_input):
- # Writes SMILES input to a file
- with open('molecule(1).smi', 'w') as f:
- f.write(smiles_input)
-# Performs the descriptor calculation
- bashCommand = "java -Xms2G -Xmx2G -Djava.awt.headless=true -jar ./PaDELDescriptor/PaDEL-Descriptor.jar -removesalt -standardizenitro -fingerprints -descriptortypes 
-./PaDEL-Descriptor/PubchemFingerprinter.xml -dir ./ -file descriptors_output.csv"
- process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
- output, error = process.communicate()
- os.remove('molecule(1).smi')
+    # Writes SMILES input to a file
+    with open('molecule(1).smi', 'w') as f:
+        f.write(smiles_input)
+    
+    # Corrected and properly terminated bash command
+    bashCommand = (
+        "java -Xms2G -Xmx2G -Djava.awt.headless=true "
+        "-jar ./PaDEL-Descriptor/PaDEL-Descriptor.jar "
+        "-removesalt -standardizenitro -fingerprints "
+        "-descriptortypes ./PaDEL-Descriptor/PubchemFingerprinter.xml "
+        "-dir ./ -file descriptors_output.csv"
+    )
+    
+    # Perform the descriptor calculation
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+
+    # Remove the temporary SMILES input file
+    os.remove('molecule(1).smi')
 # File download
 def filedownload(df):
  csv = df.to_csv(index=False)
