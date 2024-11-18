@@ -121,8 +121,7 @@ def main():
  if st.session_state.page == 'input':
  st.subheader('pIC50 Prediction')
  # Radio button for input method selection
- input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Upload 
-CSV/TXT File"))
+ input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Upload CSV/TXT File"))
  if input_method == "Copy and Paste SMILES":
  st.header('1. Enter SMILES String:')
  smiles_input = st.text_area("Enter SMILES String here:", "")
