@@ -117,7 +117,7 @@ def handle_prediction(smiles_input):
 def main():
  # Initialize session state
  if 'page' not in st.session_state:
- st.session_state.page = 'input'
+    st.session_state.page = 'input'
  # Navigation function
  def navigate_to(page):
  st.session_state.page = page
