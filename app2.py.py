@@ -39,8 +39,12 @@ def main():
     if st.session_state.page == 'input':
         st.subheader('pIC50 Prediction')
 
-        # Radio button for input method selection
-        input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Upload CSV/TXT File"))
+        # Radio button for input method selection (Fixed DuplicateWidgetID issue)
+        input_method = st.radio(
+            "Choose input method:", 
+            ("Copy and Paste SMILES", "Upload CSV/TXT File"), 
+            key="input_method_radio"
+        )
 
         if input_method == "Copy and Paste SMILES":
             st.header('1. Enter SMILES String:')
@@ -147,6 +151,7 @@ def handle_prediction(smiles_input):
 
 if __name__ == "__main__":
     main()
+
 # Main function to handle the app's logic
 def main():
     # Initialize session state
