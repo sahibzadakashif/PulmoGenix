@@ -170,21 +170,20 @@ def main():
 
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
-    with open('molecule(1).smi', 'w') as f:
-        f.write(smiles_input)
-    
-    bashCommand = (
-        "java -Xms2G -Xmx2G -Djava.awt.headless=true "
-        "-jar ./PaDEL-Descriptor/PaDEL-Descriptor.jar "
-        "-removesalt -standardizenitro -fingerprints "
-        "-descriptortypes ./PaDEL-Descriptor/PubchemFingerprinter.xml "
-        "-dir ./ -file descriptors_output.csv"
-    )
-    
-    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    """Function to calculate molecular descriptors using PaDEL."""
+    bashCommand = [
+        "java", "-Xms2G", "-Xmx2G", "-Djava.awt.headless=true",
+        "-jar", "./PaDEL-Descriptor/PaDEL-Descriptor.jar",
+        "-removesalt", "-standardizenitro", "-fingerprints",
+        "-descriptortypes", "./PaDEL-Descriptor/PubchemFingerprinter.xml",
+        "-dir", "./", "-file", "descriptors_output.csv"
+    ]
 
-    os.remove('molecule(1).smi')
+    try:
+        process = subprocess.run(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        st.success("Descriptor calculation completed successfully!")
+    except subprocess.CalledProcessError as e:
+        st.error(f"Error in descriptor calculation: {e.stderr}")
 
 # File download function
 def filedownload(df):
