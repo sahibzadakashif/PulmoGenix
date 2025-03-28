@@ -88,7 +88,7 @@ with st.container():  # Corrected from 'center' to 'st.container'
     #st.image("erm.jpg", width=800)
     col1, col2, col3 = st.columns([1,2,3])
     with col2:
-        st.image("erm.jpg", width=700)
+        st.image("erm.jpg", width=800)
 
 if __name__ == "__main__":
     main()
