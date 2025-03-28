@@ -171,7 +171,7 @@ input_method = st.radio("Choose input method:", ("Copy and Paste SMILES", "Uploa
 
 if input_method == "Copy and Paste SMILES":
     st.header('1. Enter SMILES String:')
-    #smiles_input = st.text_area("Enter SMILES String here:", "")
+    smiles_input = st.text_area("Enter SMILES String here:", "")
     
     if st.button('Predict'):
         if smiles_input:
