@@ -85,9 +85,15 @@ with st.container():  # Corrected from 'center' to 'st.container'
         """,
         unsafe_allow_html=True
     )
-    st.image("erm.jpg", width=600)
-
-
+    #st.image("erm.jpg", width=600)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="erm.jpg" width="600">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 if __name__ == "__main__":
     main()
