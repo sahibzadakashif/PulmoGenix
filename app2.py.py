@@ -85,8 +85,6 @@ def main():
     left_logo, center, right_logo = st.columns([1, 2, 1])
     #center.image("ref.jpg", width=650)
     #right_logo.image("image.jpg", width=250)
-if __name__ == "__main__":
-    main()
 def main():
     # Initialize session state variables if not already set
     if 'page' not in st.session_state:
