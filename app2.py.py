@@ -13,44 +13,80 @@ from joblib import dump, load
 import sklearn
 from sklearn import svm
 from sklearn import datasets
-# Set the color scheme
-primary_color = '#4863A0'
-secondary_color = '#4169E1'
-tertiary_color = '#368BC1'
-background_color = '#F5F5F5'
-text_color = '#004225'
-font = 'sans serif'
-# Set the page config
-st.set_page_config(
- page_title='PulmoGenix',
- layout= 'wide',
- initial_sidebar_state='expanded'
-)
-# Set the theme
-st.markdown(f"""
-<style>
-.reportview-container {{
- background-color: {background_color};
- color: {text_color};
- font-family: {font};
- }}
- .sidebar .sidebar-content {{
- background-color: {secondary_color};
- color: {tertiary_color};
- }}
- .streamlit-button {{
- background-color: {primary_color};
- color: {tertiary_color};
- }}
- footer {{
- font-family: {font};
- }}
-</style>
-""", unsafe_allow_html=True)
-# Add university logo to the page
-center = st.columns([1])
-st.image("uol.jpg", use_column_width=True)
-# Molecular descriptor calculator
+def main():
+    # Set the color scheme
+    header_color = '#91C788'
+    background_color = '#FFFFFF'
+    text_color = '#333333'
+    primary_color = '#800000'
+    footer_color = '#017C8C'
+    footer_text_color = '#FFFFFF'
+    font = 'Arial, sans serif'
+
+    # Set the page config
+    st.set_page_config(
+        page_title='PharmacoGenix',
+        layout='wide',
+        initial_sidebar_state='expanded',
+        page_icon='💊',
+    )
+
+    # Set the theme
+    st.markdown(f"""
+    <style>
+        .reportview-container {{
+            background-color: {background_color};
+            color: {text_color};
+            font-family: {font};
+        }}
+        .sidebar .sidebar-content {{
+            background-color: {header_color};
+            color: {text_color};
+        }}
+        .stButton > button {{
+            background-color: {primary_color};
+            color: {background_color};
+            border-radius: 12px;
+            font-size: 16px;
+            padding: 10px 20px;
+        }}
+        footer {{
+            font-family: {font};
+            background-color: {footer_color};
+            color: {footer_text_color};
+        }}
+        .header-title {{
+            color: {primary_color};
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }}
+        .header-subtitle {{
+            color: {text_color};
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+     # Add the image and title at the top of the page
+    col1, col2, col3 = st.columns([1,2,3])
+    with col1:
+        st.image("erm.jpg", width=580)
+    with col3:
+        st.markdown("<h1 class='header-title'>PharmacoGenix – An AI-Based Approach towards Drug Discovery</h1>", unsafe_allow_html=True)
+        st.markdown("""
+        <p class='header-subtitle'>
+        Welcome to PharmacoGenix, a powerful prediction server designed to assess the pIC50 values of compounds targeting Ribosome Methyltransferase (erm 41). Built on a highly accurate machine learning-based regression model, PharmacoGenix achieves an impressive 99% accuracy, enabling precise and reliable predictions. This tool deciphers complex molecular interactions, providing insights into the inhibitory potential of phytochemicals, microbial peptides, archaeal peptides, and synthetic ligands. Join us in advancing antimicrobial research, unlocking novel therapeutic possibilities against ribosomal resistance mechanisms.
+        </p>
+        """, unsafe_allow_html=True)
+# Add university logos to the page
+    left_logo, center, right_logo = st.columns([1, 2, 1])
+    center.image("ref.jpg", width=650)
+    #right_logo.image("image.jpg", width=250)
+if __name__ == "__main__":
+    main()
 # Molecular descriptor calculator
 def desc_calc(smiles_input):
     # Writes SMILES input to a file
@@ -200,22 +236,65 @@ if st.session_state.page == 'output':
     if st.button('Go Back'):
         navigate_to('input')
  
-# Add a section with the developers' information at the bottom of the page
-st.markdown("---")
-st.header("PulmoGenix Developers:")
-# Add the profiles as individual cards
-row1, row2 = st.columns([1, 1])
-row3 = st.columns(1)
-with row1:
-    st.write("")
-    st.write("### Dr. Kashif Iqbal Sahibzada")
-    #st.write("Assistant Professor")
-    st.write("Assistant Professor | Department of Health Professional Technologies, Faculty of Allied Health Sciences, The University of Lahore")
-    st.write("Post-Doctoral Fellow | Henan University of Technology,Zhengzhou China ")
-    st.write("Email: kashif.iqbal@dhpt.uol.edu.pk | kashif.iqbal@haut.edu.cn")
-with row2:
- st.write("")
- st.write("### Munawar Abbas")
- st.write("PhD Scholar")
- st.write("Henan University of Technology,Zhengzhou China")
- st.write("Email: abbas@stu.haut.edu.cn")  
+# HTML and CSS to color the title and header
+st.markdown(
+    """
+    <style>
+    .title {
+        color: #800000;  /* Parrot Green color code */
+        font-size: 2em;
+        font-weight: bold;
+    }
+    .header {
+        color: #800000;  /* Parrot Green color code */
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    </style>
+    <h1 class="title">Team OctaScanner:</h1>
+    """,
+    unsafe_allow_html=True
+)
+ 
+# Define columns for the profiles
+col1, col2, col3 = st.columns([1, 1, 1])
+
+with col1:
+    # st.image("my-photo.jpg", width=100)
+    st.markdown("""
+        <div style='line-height: 1.1;'>
+            <h3>Dr. Kashif Iqbal Sahibzada</h3>
+             Assistant Professor | Department of Health Professional Technologies, Faculty of Allied Health Sciences, The University of Lahore<br>
+            Post-Doctoral Fellow | Henan University of Technology,Zhengzhou China<br>
+            Email: kashif.iqbal@dhpt.uol.edu.pk | kashif.iqbal@haut.edu.cn
+        </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    # st.image("colleague-photo.jpg", width=100)
+    st.markdown("""
+        <div style='line-height: 1.1;'>
+            <h3>Munawar Abbas</h3>
+            PhD Scholar<br>
+            Henan University of Technology,Zhengzhou China<br>
+            Email: abbas@stu.haut.edu.cn
+        </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    # st.image("teacher-photo.jpg", width=100)
+    st.markdown("""
+        <div style='line-height: 1.1;'>
+            <h3>Shumaila Shahid</h3>
+            MS Biochemistry<br>
+            School of Biochemistry and Biotechnology<br>
+            University of the Punjab, Lahore<br>
+            Email: shumaila.ms.sbb@pu.edu.pk
+        </div>
+    """, unsafe_allow_html=True)
+
+#Add University Logo
+left_logo, center_left, center_right, right_logo = st.columns([1, 1, 1, 1])
+#left_logo.image("LOGO_u.jpeg", width=200)
+center_left.image("uol.jpg", width=450)  # Replace with your center-left logo image
+#right_logo.image("image.jpg", width=200)
