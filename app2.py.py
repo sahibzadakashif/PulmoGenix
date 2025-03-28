@@ -13,7 +13,80 @@ from joblib import dump, load
 import sklearn
 from sklearn import svm
 from sklearn import datasets
+def main():
+    # Set the color scheme
+    header_color = '#91C788'
+    background_color = '#FFFFFF'
+    text_color = '#333333'
+    primary_color = '#800000'
+    footer_color = '#017C8C'
+    footer_text_color = '#FFFFFF'
+    font = 'Arial, sans serif'
 
+    # Set the page config
+    st.set_page_config(
+        page_title='PharmacoGenix',
+        layout='wide',
+        initial_sidebar_state='expanded',
+        page_icon='💊',
+    )
+
+    # Set the theme
+    st.markdown(f"""
+    <style>
+        .reportview-container {{
+            background-color: {background_color};
+            color: {text_color};
+            font-family: {font};
+        }}
+        .sidebar .sidebar-content {{
+            background-color: {header_color};
+            color: {text_color};
+        }}
+        .stButton > button {{
+            background-color: {primary_color};
+            color: {background_color};
+            border-radius: 12px;
+            font-size: 16px;
+            padding: 10px 20px;
+        }}
+        footer {{
+            font-family: {font};
+            background-color: {footer_color};
+            color: {footer_text_color};
+        }}
+        .header-title {{
+            color: {primary_color};
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }}
+        .header-subtitle {{
+            color: {text_color};
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+     # Add the image and title at the top of the page
+    col1, col2, col3 = st.columns([1,2,3])
+    with col1:
+        st.image("erm.jpg", width=580)
+    with col3:
+        st.markdown("<h1 class='header-title'>PharmacoGenix – An AI-Based Approach towards Drug Discovery</h1>", unsafe_allow_html=True)
+        st.markdown("""
+        <p class='header-subtitle'>
+        Welcome to PharmacoGenix, a powerful prediction server designed to assess the pIC50 values of compounds targeting Ribosome Methyltransferase (erm 41). Built on a highly accurate machine learning-based regression model, PharmacoGenix achieves an impressive 99% accuracy, enabling precise and reliable predictions. This tool deciphers complex molecular interactions, providing insights into the inhibitory potential of phytochemicals, microbial peptides, archaeal peptides, and synthetic ligands. Join us in advancing antimicrobial research, unlocking novel therapeutic possibilities against ribosomal resistance mechanisms.
+        </p>
+        """, unsafe_allow_html=True)
+# Add university logos to the page
+    left_logo, center, right_logo = st.columns([1, 2, 1])
+    #center.image("ref.jpg", width=650)
+    #right_logo.image("image.jpg", width=250)
+if __name__ == "__main__":
+    main()
 def main():
     # Initialize session state variables if not already set
     if 'page' not in st.session_state:
