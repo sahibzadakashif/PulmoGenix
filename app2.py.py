@@ -13,23 +13,23 @@ from joblib import dump, load
 import sklearn
 from sklearn import svm
 from sklearn import datasets
+# Set the page configuration (must be the first Streamlit command)
+st.set_page_config(
+    page_title='PharmacoGenix',
+    layout='wide',
+    initial_sidebar_state='expanded',
+    page_icon='💊',
+)
+
 def main():
     # Set the color scheme
-    header_color = '#91C788'
-    background_color = '#FFFFFF'
-    text_color = '#333333'
-    primary_color = '#800000'
-    footer_color = '#017C8C'
-    footer_text_color = '#FFFFFF'
-    font = 'Arial, sans serif'
-
-    # Set the page config
-    st.set_page_config(
-        page_title='PharmacoGenix',
-        layout='wide',
-        initial_sidebar_state='expanded',
-        page_icon='💊',
-    )
+    header_color = '#800000'         # Maroon
+    background_color = '#FFFFFF'     # White
+    text_color = '#333333'           # Dark Gray
+    primary_color = '#A52A2A'        # Darker Maroon
+    footer_color = '#550000'         # Deep Maroon
+    footer_text_color = '#FFFFFF'    # White
+    font = 'Arial, sans-serif'
 
     # Set the theme
     st.markdown(f"""
@@ -70,21 +70,27 @@ def main():
         }}
     </style>
     """, unsafe_allow_html=True)
-     # Add the image and title at the top of the page
-    col1, col2, col3 = st.columns([1,2,3])
-    with col1:
-        st.image("erm.jpg", width=580)
-    with col3:
-        st.markdown("<h1 class='header-title'>PharmacoGenix – An AI-Based Approach towards Drug Discovery</h1>", unsafe_allow_html=True)
-        st.markdown("""
+
+   # Add header with application title and description
+with st.container():  # Corrected from 'center' to 'st.container'
+    st.markdown(
+        "<h1 class='header-title'>PharmacoGenix – An Artificial Intelligence Approach towards the Drug Discovery</h1>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        """
         <p class='header-subtitle'>
         Welcome to PharmacoGenix, a powerful prediction server designed to assess the pIC50 values of compounds targeting Ribosome Methyltransferase (erm 41). Built on a highly accurate machine learning-based regression model, PharmacoGenix achieves an impressive 99% accuracy, enabling precise and reliable predictions. This tool deciphers complex molecular interactions, providing insights into the inhibitory potential of phytochemicals, microbial peptides, archaeal peptides, and synthetic ligands. Join us in advancing antimicrobial research, unlocking novel therapeutic possibilities against ribosomal resistance mechanisms.
         </p>
-        """, unsafe_allow_html=True)
-# Add university logos to the page
-    left_logo, center, right_logo = st.columns([1, 2, 1])
-    #center.image("ref.jpg", width=650)
-    #right_logo.image("image.jpg", width=250)
+        """,
+        unsafe_allow_html=True
+    )
+    st.image("erm.jpg", width=1200)
+
+
+
+if __name__ == "__main__":
+    main()
 def main():
     # Initialize session state variables if not already set
     if 'page' not in st.session_state:
@@ -93,15 +99,6 @@ def main():
         st.session_state.smiles_input = ''
     if 'prediction_df' not in st.session_state:
         st.session_state.prediction_df = None
-
-    # Set the page config
-    st.set_page_config(
-        page_title='PharmacoGenix',
-        layout='wide',
-        initial_sidebar_state='expanded',
-        page_icon='💊',
-    )
-
     # Navigation function
     def navigate_to(page):
         st.session_state.page = page
