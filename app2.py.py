@@ -171,20 +171,18 @@ def main():
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
     try:
-        bashCommand = f"python calculate_descriptors.py {smiles_input}" # Ensure this is correct
-        process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        bashCommand = f"python calculate_descriptors.py {smiles_input}"
+        process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
         if process.returncode != 0:
-            st.error(f"Error in descriptor calculation: {process.stderr}")
+            st.error(f"Descriptor calculation failed. Error: {process.stderr}")
             return None
         
         return process.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        st.error(f"Subprocess error: {e}")
-        return None
     except Exception as e:
         st.error(f"Unexpected error: {str(e)}")
         return None
+
 
 # File download function
 def filedownload(df):
