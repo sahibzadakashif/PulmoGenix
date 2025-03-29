@@ -170,20 +170,21 @@ def main():
 
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
-    """Function to calculate molecular descriptors using PaDEL."""
-    bashCommand = [
-        "java", "-Xms2G", "-Xmx2G", "-Djava.awt.headless=true",
-        "-jar", "./PaDEL-Descriptor/PaDEL-Descriptor.jar",
-        "-removesalt", "-standardizenitro", "-fingerprints",
-        "-descriptortypes", "./PaDEL-Descriptor/PubchemFingerprinter.xml",
-        "-dir", "./", "-file", "descriptors_output.csv"
-    ]
-
     try:
-        process = subprocess.run(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-        st.success("Descriptor calculation completed successfully!")
+        bashCommand = f"your_command_here {smiles_input}"  # Ensure this is correct
+        process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        
+        if process.returncode != 0:
+            st.error(f"Error in descriptor calculation: {process.stderr}")
+            return None
+        
+        return process.stdout.strip()
     except subprocess.CalledProcessError as e:
-        st.error(f"Error in descriptor calculation: {e.stderr}")
+        st.error(f"Subprocess error: {e}")
+        return None
+    except Exception as e:
+        st.error(f"Unexpected error: {str(e)}")
+        return None
 
 # File download function
 def filedownload(df):
@@ -206,16 +207,16 @@ def build_model(input_data, smiles_list):
 
 # Function to handle SMILES input and prediction
 def handle_prediction(smiles_input):
-    with st.spinner("Calculating descriptors..."):
-        desc_calc(smiles_input)
-
-    desc = pd.read_csv('descriptors_output.csv')
-    Xlist = list(pd.read_csv('descriptor_list.csv').columns)
-    desc_subset = desc[Xlist]
-    smiles_list = smiles_input.split('\n')
-
-    prediction_df = build_model(desc_subset, smiles_list)
-    return prediction_df
+    desc_result = desc_calc(smiles_input)
+    if desc_result is None:
+        return None
+    
+    try:
+        prediction_df = pd.DataFrame({'SMILES': [smiles_input], 'Prediction': [desc_result]})
+        return prediction_df
+    except Exception as e:
+        st.error(f"Error in processing prediction: {str(e)}")
+        return None
 
 if __name__ == "__main__":
     main()
