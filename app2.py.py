@@ -171,7 +171,8 @@ def main():
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
     try:
-        bashCommand = f"python calculate_descriptors.py {smiles_input}"
+        # Wrap SMILES in double quotes to handle special characters
+        bashCommand = f'python calculate_descriptors.py "{smiles_input}"'  
         process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
         if process.returncode != 0:
@@ -182,6 +183,7 @@ def desc_calc(smiles_input):
     except Exception as e:
         st.error(f"Unexpected error: {str(e)}")
         return None
+
 
 
 # File download function
