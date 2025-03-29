@@ -171,8 +171,13 @@ def main():
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
     try:
-        # Wrap SMILES in double quotes to handle special characters
-        bashCommand = f'python calculate_descriptors.py "{smiles_input}"'  
+        script_path = "Lipinski.py"  # Ensure this path is correct
+        if not os.path.exists(script_path):
+            st.error(f"Descriptor script not found at {script_path}. Check the path!")
+            return None
+
+        # Wrap SMILES in quotes to handle special characters
+        bashCommand = f'python "{script_path}" "{smiles_input}"'
         process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
         if process.returncode != 0:
