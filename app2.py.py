@@ -171,7 +171,7 @@ def main():
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
     try:
-        bashCommand = f"your_command_here {smiles_input}"  # Ensure this is correct
+        bashCommand = f"python calculate_descriptors.py {smiles_input}" # Ensure this is correct
         process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         
         if process.returncode != 0:
