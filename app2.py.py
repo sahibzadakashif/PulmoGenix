@@ -171,26 +171,20 @@ def main():
 # Descriptor Calculation Function
 def desc_calc(smiles_input):
     try:
-        script_path = "Lipinski.py"  # Ensure this path is correct
-        if not os.path.exists(script_path):
-            st.error(f"Descriptor script not found at {script_path}. Check the path!")
-            return None
-
-        # Wrap SMILES in quotes to handle special characters
-        bashCommand = f'python "{script_path}" "{smiles_input}"'
-        process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        bashCommand = f"your_command_here {smiles_input}"  # Ensure this is correct
+        process = subprocess.run(bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         
         if process.returncode != 0:
-            st.error(f"Descriptor calculation failed. Error: {process.stderr}")
+            st.error(f"Error in descriptor calculation: {process.stderr}")
             return None
         
         return process.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        st.error(f"Subprocess error: {e}")
+        return None
     except Exception as e:
         st.error(f"Unexpected error: {str(e)}")
         return None
-
-
-
 # File download function
 def filedownload(df):
     csv = df.to_csv(index=False)
