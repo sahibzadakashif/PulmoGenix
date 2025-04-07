@@ -40,8 +40,8 @@ def get_download_link(df):
     return f'<a href="data:file/csv;base64,{b64}" download="predictions.csv">📥 Download CSV</a>'
 
 def main():
-    st.title("🧠 NeuroPlex")
-    st.markdown("AI-powered prediction of **pIC₅₀** and bioactivity class for Alzheimer's drug candidates.")
+    st.title("🍤PharmacoGenix")
+    st.markdown("AI-powered prediction of **pIC₅₀** and bioactivity class for Ribosome Methyltransferase (erm 41) targeting drug candidates.")
 
     input_method = st.radio("Choose Input Method", ["Paste SMILES", "Upload File"])
 
@@ -71,13 +71,46 @@ def main():
                 st.error(f"❌ Error: {e}")
 
     st.markdown("---")
-    st.markdown("#### 👨‍🔬 Team NeuroPlex")
-    st.markdown("""
-    - **Dr. Kashif Iqbal Sahibzada** – UOL & HAUT  
-    - **Dr. Andleeb Batool** – GCU Lahore  
-    - **Shumaila Shahid** – PU Lahore
-    """)
+    st.markdown("##  PharmacoGenix Developers:")
+
+    # Define columns for the profiles
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    with col1:
+        st.markdown("""
+            <div style='line-height: 1.3; color: #000000;'>
+                <h3 style='color:#006a4e;'>Dr. Kashif Iqbal Sahibzada</h3>
+                Assistant Professor<br>
+                Department of Health Professional Technologies,<br>
+                Faculty of Allied Health Sciences,<br>
+                The University of Lahore<br>
+                Post-Doctoral Fellow<br>
+                Henan University of Technology, Zhengzhou, China<br>
+                <b>Email:</b> kashif.iqbal@dhpt.uol.edu.pk | kashif.iqbal@haut.edu.cn
+            </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+            <div style='line-height: 1.3; color: #000000;'>
+                <h3 style='color:#006a4e;'>Munawar Abbas</h3>
+                PhD Scholar<br>
+                Henan University of Technology,Zhengzhou China<br>
+                <b>Email:</b> Email: abbas@stu.haut.edu.cn
+            </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+            <div style='line-height: 1.3; color: #000000;'>
+                <h3 style='color:#006a4e;'>Shumaila Shahid</h3>
+                MS Biochemistry<br>
+                School of Biochemistry and Biotechnology<br>
+                University of the Punjab, Lahore<br>
+                <b>Email:</b> shumaila.ms.sbb@pu.edu.pk
+            </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
-
+za
